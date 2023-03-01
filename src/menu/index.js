@@ -1,4 +1,3 @@
-const Repository = require('../repositories/Repository');
 const readlineAsync = require('../utils/readline');
 const waitAndExecute = require('../utils/waitAndExecute');
 const {
@@ -6,6 +5,7 @@ const {
   sumPopulationWithHofs,
   sumPopulationWithQuery,
   sumPopulationBetweenAGivenRangeOfYears,
+  addDataOnDatabase,
 } = require('./options');
 
 async function menu() {
@@ -29,9 +29,8 @@ async function menu() {
       await waitAndExecute(1, exit);
       break;
     case '1':
-      const repository = new Repository();
-      await repository.addDataOnDB();
-      waitAndExecute(1, menu);
+      await addDataOnDatabase();
+      waitAndExecute(2, menu);
       break;
     case '2':
       await sumPopulationWithHofs();

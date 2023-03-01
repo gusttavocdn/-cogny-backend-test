@@ -46,8 +46,6 @@ class Repository {
     });
 
     Repository.dataCalls++;
-
-    console.log('Data saved on DB');
   }
 
   async getDataFromDB() {

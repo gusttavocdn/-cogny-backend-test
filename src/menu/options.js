@@ -8,7 +8,17 @@ function exit() {
   }, 1000);
 }
 
+async function addDataOnDatabase() {
+  const repository = new Repository();
+  await repository.addDataOnDB();
+
+  console.log('Data saved on DB');
+}
+
 async function sumPopulationWithHofs() {
+  console.clear();
+  console.log('Calculating...\n');
+
   const respository = new Repository();
   const data = await respository.getDataFromDB();
 
@@ -58,4 +68,5 @@ module.exports = {
   sumPopulationWithHofs,
   sumPopulationWithQuery,
   sumPopulationBetweenAGivenRangeOfYears,
+  addDataOnDatabase,
 };
