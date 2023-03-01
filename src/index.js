@@ -2,6 +2,7 @@ const { SHOW_PG_MONITOR } = require('../env');
 const connectToDatabase = require('./database/config');
 const migrationUp = require('./database/migrationUp');
 const monitor = require('pg-monitor');
+const wait = require('./utils/wait');
 
 async function main() {
   console.log('main.js: before start');
@@ -18,7 +19,7 @@ async function main() {
   } catch (e) {
     console.log(e.message);
   } finally {
-    console.log('App is running...');
+    wait(3);
   }
 }
 
