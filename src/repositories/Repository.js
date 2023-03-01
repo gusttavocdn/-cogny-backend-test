@@ -50,7 +50,7 @@ class Repository {
 
   async getDataFromDB() {
     const db = await connectToDatabase();
-    const { doc_record } = await db[DATABASE_SCHEMA].api_data.findDoc(2);
+    const { doc_record } = await db[DATABASE_SCHEMA].api_data.findOne({});
     return doc_record.data;
   }
 

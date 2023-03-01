@@ -1,4 +1,4 @@
-const { SHOW_PG_MONITOR } = require('../env');
+const { SHOW_PG_MONITOR, DATABASE_SCHEMA } = require('../env');
 const connectToDatabase = require('./database/config');
 const migrationUp = require('./database/migrationUp');
 const monitor = require('pg-monitor');
@@ -16,6 +16,7 @@ async function main() {
 
   //public
   try {
+    // await db.dropSchema(DATABASE_SCHEMA, { ifExists: true, cascade: true });
     await migrationUp(db);
   } catch (e) {
     console.log(e.message);
