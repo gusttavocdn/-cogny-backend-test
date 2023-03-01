@@ -1,7 +1,11 @@
 const Repository = require('../repositories/Repository');
 const readline = require('../utils/readline');
 const waitAndExecute = require('../utils/waitAndExecute');
-const { exit, SumPopulationWithHofs } = require('./options');
+const {
+  exit,
+  SumPopulationWithHofs,
+  SumPopulationWithQuery,
+} = require('./options');
 
 function menu() {
   console.clear();
@@ -13,6 +17,7 @@ function menu() {
   console.log('\n 0 - exit the application');
   console.log(' 1 - retrieve the data on the database');
   console.log(' 2 - sum the population from 2018 to 2020');
+  console.log(' 3 - sum the population from 2018 to 2020 with query');
 
   readline.question('\nYour option: ', async (option) => {
     switch (option) {
@@ -27,6 +32,10 @@ function menu() {
         break;
       case '2':
         await SumPopulationWithHofs();
+        waitAndExecute(3, exit);
+        break;
+      case '3':
+        await SumPopulationWithQuery();
         await waitAndExecute(3, exit);
         break;
       default:

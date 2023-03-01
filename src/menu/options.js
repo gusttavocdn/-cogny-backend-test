@@ -18,4 +18,13 @@ async function SumPopulationWithHofs() {
   );
 }
 
-module.exports = { exit, SumPopulationWithHofs };
+async function SumPopulationWithQuery() {
+  const respository = new Repository();
+  const { sum: population } = await respository.getSumPopulation();
+
+  console.log(
+    `The population sum between the years 2018 to 2020 are: ${population}`
+  );
+}
+
+module.exports = { exit, SumPopulationWithHofs, SumPopulationWithQuery };

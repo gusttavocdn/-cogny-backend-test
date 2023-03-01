@@ -56,6 +56,17 @@ class Repository {
     const { doc_record } = await db[DATABASE_SCHEMA].api_data.findDoc(2);
     return doc_record.data;
   }
+
+  async getSumPopulation() {
+    const db = await connectToDatabase();
+    const data = await db.query(
+      `SELECT SUM((item->>'Population')::int) 
+      FROM ${DATABASE_SCHEMA}.api_data, jsonb_array_elements(doc_record->'data') AS item
+      WHERE (item->>'Year')::int BETWEEN 2018 AND 2020;`
+    );
+
+    return data[0];
+  }
 }
 
 module.exports = Repository;
