@@ -43,7 +43,7 @@ async function sumPopulationWithQuery(startYear = 2018, endYear = 2020) {
   );
 
   console.log(
-    `The population sum between the years 2018 to 2020 are: ${population}`
+    `The population sum between the years ${startYear} to ${endYear} are: ${population}`
   );
 }
 
