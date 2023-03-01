@@ -22,3 +22,27 @@ https://axios-http.com/
 Ferramentas:
 https://tableplus.com/
 Postgres: por utilizar o PG fornecido pela nuvem HEROKU a string de conexao está no arquivo .env
+
+### Como rodar a Aplicação
+
+1. Clone o repositório
+
+```bash
+    git clone git@github.com:gusttavocdn/-cogny-backend-test.git && cd -cogny-backend-test
+```
+
+2. Instale as dependências
+
+```bash
+    npm install
+```
+
+3. Inicie o app
+    
+    ```bash
+        npm start
+
+        // ou
+
+        node ./src/index.js
+    ```
