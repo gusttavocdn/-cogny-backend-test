@@ -1,6 +1,6 @@
 const connectToDatabase = require('../database/config');
 const { DATABASE_SCHEMA } = require('../../env');
-const readline = require('../utils/readline');
+const readlineAsync = require('../utils/readline');
 const axios = require('axios');
 
 class Repository {
@@ -15,24 +15,23 @@ class Repository {
     return data;
   }
 
-  #ensureThatUserWantsToSaveDataAgain() {
+  async #ensureThatUserWantsToSaveDataAgain() {
     if (Repository.dataCalls == 0) return true;
 
-    readline.question('Y/N: ', (option) => {
-      switch (option) {
-        case 'Y':
-          return true;
-        case 'N':
-          return false;
-        default:
-          console.log('Invalid option');
-      }
-      readline.close();
-    });
+    const option = await readlineAsync('Y/N:');
+
+    switch (option) {
+      case 'Y':
+        return true;
+      case 'N':
+        return false;
+      default:
+        console.log('Invalid option');
+    }
   }
 
   async addDataOnDB() {
-    const shouldSaveData = this.#ensureThatUserWantsToSaveDataAgain();
+    const shouldSaveData = await this.#ensureThatUserWantsToSaveDataAgain();
 
     if (!shouldSaveData) {
       console.log('Data already exists on DB');
@@ -57,12 +56,12 @@ class Repository {
     return doc_record.data;
   }
 
-  async getSumPopulation() {
+  async getSumPopulation(startYear, endYear) {
     const db = await connectToDatabase();
     const data = await db.query(
       `SELECT SUM((item->>'Population')::int) 
       FROM ${DATABASE_SCHEMA}.api_data, jsonb_array_elements(doc_record->'data') AS item
-      WHERE (item->>'Year')::int BETWEEN 2018 AND 2020;`
+      WHERE (item->>'Year')::int BETWEEN ${startYear} AND ${endYear};`
     );
 
     return data[0];

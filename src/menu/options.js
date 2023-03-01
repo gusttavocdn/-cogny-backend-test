@@ -1,10 +1,14 @@
 const Repository = require('../repositories/Repository');
+const readlineAsync = require('../utils/readline');
 
 function exit() {
-  process.exit(0);
+  console.log('Exiting the application...');
+  setTimeout(() => {
+    process.exit(0);
+  }, 1000);
 }
 
-async function SumPopulationWithHofs() {
+async function sumPopulationWithHofs() {
   const respository = new Repository();
   const data = await respository.getDataFromDB();
 
@@ -18,13 +22,40 @@ async function SumPopulationWithHofs() {
   );
 }
 
-async function SumPopulationWithQuery() {
+async function sumPopulationWithQuery(startYear = 2018, endYear = 2020) {
+  console.clear();
+  console.log('Calculating...\n');
+
   const respository = new Repository();
-  const { sum: population } = await respository.getSumPopulation();
+  const { sum: population } = await respository.getSumPopulation(
+    startYear,
+    endYear
+  );
 
   console.log(
     `The population sum between the years 2018 to 2020 are: ${population}`
   );
 }
 
-module.exports = { exit, SumPopulationWithHofs, SumPopulationWithQuery };
+async function sumPopulationBetweenAGivenRangeOfYears() {
+  const startYear = await readlineAsync('Start year: ');
+  const endYear = await readlineAsync('End year: ');
+
+  if (
+    Number(startYear) > Number(endYear) ||
+    isNaN(startYear) ||
+    isNaN(endYear)
+  ) {
+    console.log('Invalid range of years. Try again');
+    return sumPopulationBetweenAGivenRangeOfYears();
+  }
+
+  await sumPopulationWithQuery(startYear, endYear);
+}
+
+module.exports = {
+  exit,
+  sumPopulationWithHofs,
+  sumPopulationWithQuery,
+  sumPopulationBetweenAGivenRangeOfYears,
+};
